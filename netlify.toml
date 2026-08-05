@@ -4,9 +4,12 @@
 
 [functions]
   node_bundler = "esbuild"
+  # Sertakan views/ & public/ (hasil salinan prepare.js) ke dalam bundle function
+  included_files = ["netlify/functions/_assets/**"]
 
 [functions.esbuild]
-  external = ["pg", "pg-native", "pg-connection-string", "connect-pg-simple"]
+  # ejs di-require dinamis oleh Express saat render → harus eksternal
+  external = ["pg", "pg-native", "pg-connection-string", "connect-pg-simple", "ejs"]
 
 # Arahkan semua URL ke aplikasi Express
 [[redirects]]

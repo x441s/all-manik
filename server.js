@@ -20,8 +20,15 @@ const app = express();
 // Lokal: asset ada di root proyek. Netlify: build menyalin asset ke
 // netlify/functions/_assets (karena __dirname berubah saat dibundle).
 function appRoot() {
-  const netlifyAssets = path.join(__dirname, '_assets');
-  return fs.existsSync(netlifyAssets) ? netlifyAssets : __dirname;
+  // Lokal: asset ada di root proyek. Netlify: build menyalin asset ke
+  // netlify/functions/_assets (karena __dirname berubah saat dibundle).
+  // Coba beberapa lokasi untuk mengantisipasi penempatan folder _assets.
+  const candidates = [
+    path.join(__dirname, '_assets'),
+    path.join(__dirname, 'netlify', 'functions', '_assets'),
+    __dirname,
+  ];
+  return candidates.find((c) => fs.existsSync(path.join(c, 'views'))) || __dirname;
 }
 const ROOT = appRoot();
 
