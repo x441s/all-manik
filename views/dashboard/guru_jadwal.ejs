@@ -1,0 +1,78 @@
+<%- include('../partials/head', { pageTitle }) %>
+<%- include('../partials/dash-open') %>
+
+<div class="dash-head">
+  <div>
+    <h1>Jadwal Mengajar</h1>
+    <p class="muted">Kelola jadwal pelajaran kelas Anda.</p>
+  </div>
+</div>
+
+<%- include('../partials/flash') %>
+
+<details class="card form-card" open>
+  <summary class="form-card-title">＋ Tambah Jadwal Baru</summary>
+  <form method="POST" action="/guru/jadwal" class="form form-grid">
+    <label class="field">
+      <span>Kelas</span>
+      <select name="kelas_id" required>
+        <% kelas.forEach((k) => { %><option value="<%= k.id %>"><%= k.nama %></option><% }) %>
+      </select>
+    </label>
+    <label class="field">
+      <span>Hari</span>
+      <select name="hari" required>
+        <% ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].forEach((h) => { %>
+          <option value="<%= h %>"><%= h %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label class="field">
+      <span>Jam Mulai</span>
+      <input type="time" name="jam_mulai" required>
+    </label>
+    <label class="field">
+      <span>Jam Selesai</span>
+      <input type="time" name="jam_selesai" required>
+    </label>
+    <label class="field field-wide">
+      <span>Mata Pelajaran</span>
+      <input type="text" name="mapel" placeholder="mis. Matematika" required>
+    </label>
+    <div class="field field-wide form-actions">
+      <button type="submit" class="btn btn-primary">Simpan Jadwal</button>
+    </div>
+  </form>
+</details>
+
+<section class="card">
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>Hari</th><th>Jam</th><th>Mata Pelajaran</th><th>Kelas</th><th class="ta-right">Aksi</th></tr>
+      </thead>
+      <tbody>
+        <% if (jadwal.length) { %>
+          <% jadwal.forEach((j) => { %>
+            <tr>
+              <td><span class="badge badge-day"><%= j.hari %></span></td>
+              <td><%= j.jam_mulai %> – <%= j.jam_selesai %></td>
+              <td><%= j.mapel %></td>
+              <td><%= j.kelas %></td>
+              <td class="ta-right">
+                <form method="POST" action="/guru/jadwal/<%= j.id %>/delete" class="inline" onsubmit="return confirm('Hapus jadwal ini?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="5" class="muted ta-center">Belum ada jadwal. Tambahkan melalui form di atas.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<%- include('../partials/dash-close') %>
+<%- include('../partials/end') %>

@@ -1,0 +1,89 @@
+<%- include('partials/head', { pageTitle }) %>
+<%- include('partials/header') %>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <span class="hero-badge">Sekolah · Guru · Orang Tua</span>
+      <h1>Tumbuh <span class="accent">pintar</span> dan <span class="accent">berkarakter</span> di Rumah Belajar All Manik</h1>
+      <p>Informasi pendidikan, tips &amp; trik belajar, dan promo terbaik untuk mendukung perjalanan belajar si kecil — semuanya dalam satu tempat.</p>
+      <div class="hero-actions">
+        <a href="/#info" class="btn btn-primary">Jelajahi Informasi</a>
+        <a href="/login" class="btn btn-ghost">Masuk Dashboard</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>1A</strong><span>Kelas Aktif</span></div>
+        <div class="stat"><strong>3+</strong><span>Program Belajar</span></div>
+        <div class="stat"><strong>24/7</strong><span>Pantau Belajar</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="art-card art-main">📚 Belajar Seru</div>
+      <div class="art-card art-1">🧑‍🏫 Guru Hebat</div>
+      <div class="art-card art-2">👨‍👩‍👧 Kolaborasi Orang Tua</div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- Info Pendidikan -->
+  <section id="info" class="section">
+    <div class="section-head">
+      <h2>📖 Info Pendidikan</h2>
+      <p>Kabar terbaru seputar pendidikan dan kegiatan sekolah.</p>
+    </div>
+    <div class="grid">
+      <% infos.forEach((item) => { %>
+        <article class="card">
+          <span class="badge badge-info"><%= item.kategori %></span>
+          <h3><%= item.judul %></h3>
+          <p><%= item.isi %></p>
+          <span class="card-date">🗓 <%= item.dibuat_pada %></span>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- Tips & Trik Belajar -->
+  <section id="tips" class="section">
+    <div class="section-head">
+      <h2>💡 Tips &amp; Trik Belajar</h2>
+      <p>Kumpulan cara belajar efektif untuk anak.</p>
+    </div>
+    <div class="grid">
+      <% tips.forEach((item) => { %>
+        <article class="card card-tip">
+          <span class="tip-icon" aria-hidden="true">💡</span>
+          <h3><%= item.judul %></h3>
+          <p><%= item.isi %></p>
+          <span class="badge badge-tip"><%= item.kategori %></span>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- Promo -->
+  <section id="promo" class="section">
+    <div class="section-head">
+      <h2>🎉 Promo Spesial</h2>
+      <p>Penawaran terbaik untuk keluarga Rumah Belajar All Manik.</p>
+    </div>
+    <div class="grid">
+      <% promos.forEach((item) => { %>
+        <article class="card card-promo">
+          <div class="promo-tag"><%= item.potongan %></div>
+          <h3><%= item.judul %></h3>
+          <p><%= item.deskripsi %></p>
+          <span class="card-date">Berlaku s.d. <%= item.berlaku_sampai %></span>
+          <button class="btn btn-primary btn-sm promo-claim" type="button">Klaim Promo</button>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+
+</main>
+
+<%- include('partials/footer') %>
+<%- include('partials/end') %>

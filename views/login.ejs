@@ -1,0 +1,30 @@
+<%- include('partials/head', { pageTitle }) %>
+
+<main class="login-wrap">
+  <div class="login-card">
+    <a href="/" class="brand login-brand">
+      <span class="brand-logo" aria-hidden="true">🏠</span>
+      <span class="brand-text"><strong>Rumah Belajar</strong> All Manik</span>
+    </a>
+    <h1>Masuk Dashboard</h1>
+    <p class="login-sub">Pilih akun sesuai peran Anda: admin, guru, atau orang tua.</p>
+
+    <%- include('partials/flash') %>
+
+    <form method="POST" action="/login" class="form">
+      <label class="field">
+        <span>Email</span>
+        <input type="email" name="email" placeholder="nama@allmanik.id" required autocomplete="email">
+      </label>
+      <label class="field">
+        <span>Kata Sandi</span>
+        <input type="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+    </form>
+
+    <a href="/" class="login-back">← Kembali ke beranda</a>
+  </div>
+</main>
+
+<%- include('partials/end') %>

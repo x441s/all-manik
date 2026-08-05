@@ -1,0 +1,54 @@
+<% const links = {
+  admin: [
+    { href: '/admin', key: 'home', label: 'Ringkasan' },
+    { href: '#', key: 'konten', label: 'Kelola Konten', soon: true },
+    { href: '#', key: 'promo', label: 'Kelola Promo', soon: true },
+    { href: '#', key: 'users', label: 'Pengguna', soon: true },
+    { href: '#', key: 'setting', label: 'Pengaturan', soon: true },
+  ],
+  guru: [
+    { href: '/guru', key: 'home', label: 'Ringkasan' },
+    { href: '/guru/jadwal', key: 'jadwal', label: 'Jadwal Mengajar' },
+    { href: '/guru/materi', key: 'materi', label: 'Materi' },
+    { href: '/guru/tugas', key: 'tugas', label: 'Tugas' },
+  ],
+  orangtua: [
+    { href: '/orangtua', key: 'home', label: 'Ringkasan' },
+    { href: '/orangtua', key: 'jadwal', label: 'Jadwal Anak' },
+    { href: '/orangtua', key: 'materi', label: 'Materi' },
+    { href: '/orangtua', key: 'tugas', label: 'Tugas' },
+  ],
+}[currentUser.role] || []; %>
+
+<div class="dash-layout">
+  <div class="dash-scrim" id="dashScrim"></div>
+  <aside class="dash-sidebar" id="dashSidebar">
+    <a href="/" class="dash-brand">
+      <span class="brand-logo" aria-hidden="true">🏠</span>
+      <span><strong>Rumah Belajar</strong> All Manik</span>
+    </a>
+    <nav class="dash-nav">
+      <p class="dash-nav-label">Menu</p>
+      <% links.forEach((l) => { %>
+        <% if (l.soon) { %>
+          <span class="dash-link disabled"><%= l.label %> <em class="tag">segera</em></span>
+        <% } else { %>
+          <a href="<%= l.href %>" class="dash-link <%= active === l.key ? 'active' : '' %>"><%= l.label %></a>
+        <% } %>
+      <% }) %>
+    </nav>
+    <div class="dash-sidebar-foot">
+      <a href="/" class="dash-link">← Kembali ke Beranda</a>
+    </div>
+  </aside>
+
+  <div class="dash-main">
+    <header class="dash-topbar">
+      <button class="dash-toggle" id="dashToggle" aria-label="Buka menu samping">☰</button>
+      <div class="dash-topbar-right">
+        <span class="dash-user">👤 <%= currentUser.name %></span>
+        <span class="dash-role-badge"><%= ROLE_LABEL[currentUser.role] %></span>
+        <a href="/logout" class="btn btn-ghost btn-sm">Keluar</a>
+      </div>
+    </header>
+    <main class="dash-content">

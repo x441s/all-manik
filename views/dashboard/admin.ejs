@@ -1,0 +1,41 @@
+<%- include('../partials/head', { pageTitle }) %>
+<%- include('../partials/dash-open') %>
+
+<div class="dash-head">
+  <div>
+    <h1>Dashboard Admin</h1>
+    <p class="muted">Halo, <%= currentUser.name %>. Panel ini masih dikembangkan.</p>
+  </div>
+</div>
+
+<%- include('../partials/flash') %>
+
+<!-- Kartu statistik kerangka -->
+<div class="grid stat-grid">
+  <div class="card stat-card">
+    <span class="stat-ico">👥</span>
+    <div><strong>–</strong><span>Total Pengguna</span></div>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-ico">📚</span>
+    <div><strong>–</strong><span>Materi</span></div>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-ico">📝</span>
+    <div><strong>–</strong><span>Tugas</span></div>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-ico">🎉</span>
+    <div><strong>–</strong><span>Promo Aktif</span></div>
+  </div>
+</div>
+
+<!-- Konten admin sengaja dikosongkan sesuai permintaan -->
+<div class="card empty">
+  <div class="empty-ico" aria-hidden="true">🚧</div>
+  <h3>Konten dashboard admin masih kosong</h3>
+  <p>Menu di samping (Kelola Konten, Kelola Promo, Pengguna) menunggu Anda tentukan. Silakan beri tahu saya kapan siap mengisinya.</p>
+</div>
+
+<%- include('../partials/dash-close') %>
+<%- include('../partials/end') %>

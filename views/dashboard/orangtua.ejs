@@ -1,0 +1,87 @@
+<%- include('../partials/head', { pageTitle }) %>
+<%- include('../partials/dash-open') %>
+
+<div class="dash-head">
+  <div>
+    <h1>Dashboard Orang Tua</h1>
+    <p class="muted">Pantau jadwal, materi, dan tugas putra-putri Anda.</p>
+  </div>
+</div>
+
+<%- include('../partials/flash') %>
+
+<% if (!anak.length) { %>
+  <div class="card empty">
+    <div class="empty-ico" aria-hidden="true">👨‍👩‍👧</div>
+    <h3>Belum ada anak yang terhubung</h3>
+    <p>Hubungkan akun ini ke data siswa terlebih dahulu di pengelolaan data.</p>
+  </div>
+<% } %>
+
+<% if (anak.length) { %>
+  <div class="grid stat-grid">
+    <% anak.forEach((a) => { %>
+      <div class="card stat-card">
+        <span class="stat-ico">🧒</span>
+        <div>
+          <strong><%= a.nama %></strong>
+          <span>NIS <%= a.nis %> · <%= a.kelas %></span>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="dash-cols">
+    <section class="card">
+      <div class="card-head"><h2>🗓 Jadwal Anak</h2></div>
+      <% if (jadwal.length) { %>
+        <div class="table-wrap">
+          <table class="table table-sm">
+            <thead><tr><th>Hari</th><th>Jam</th><th>Mapel</th><th>Guru</th></tr></thead>
+            <tbody>
+              <% jadwal.forEach((j) => { %>
+                <tr>
+                  <td><span class="badge badge-day"><%= j.hari %></span></td>
+                  <td><%= j.jam_mulai %>–<%= j.jam_selesai %></td>
+                  <td><%= j.mapel %></td>
+                  <td><%= j.guru %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %><p class="muted">Belum ada jadwal.</p><% } %>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>📚 Materi</h2></div>
+      <% if (materi.length) { %>
+        <ul class="list">
+          <% materi.forEach((m) => { %>
+            <li><strong><%= m.judul %></strong><span><%= m.mapel %> · <%= m.kelas %> · <%= m.guru %></span></li>
+          <% }) %>
+        </ul>
+      <% } else { %><p class="muted">Belum ada materi.</p><% } %>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>📝 Tugas</h2></div>
+      <% if (tugas.length) { %>
+        <ul class="list">
+          <% tugas.forEach((t) => { %>
+            <li>
+              <strong><%= t.judul %></strong>
+              <span><%= t.mapel %> · <%= t.kelas %> · <%= t.guru %></span>
+              <span class="badge <%= t.tenggat && t.tenggat < now.toISOString().slice(0,10) ? 'badge-danger' : 'badge-warn' %>">
+                <% if (t.tenggat) { %>Tenggat <%= t.tenggat %><% } else { %>Tanpa tenggat<% } %>
+              </span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %><p class="muted">Belum ada tugas.</p><% } %>
+    </section>
+  </div>
+<% } %>
+
+<%- include('../partials/dash-close') %>
+<%- include('../partials/end') %>

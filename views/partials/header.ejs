@@ -1,0 +1,25 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <span class="brand-logo" aria-hidden="true">🏠</span>
+      <span class="brand-text"><strong>Rumah Belajar</strong> All Manik</span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" id="siteNav">
+      <a href="/#info">Info Pendidikan</a>
+      <a href="/#tips">Tips &amp; Trik</a>
+      <a href="/#promo">Promo</a>
+      <% if (currentUser) { %>
+        <a href="<%= {admin:'/admin',guru:'/guru',orangtua:'/orangtua'}[currentUser.role] %>" class="btn btn-primary btn-sm">Dashboard</a>
+        <a href="/logout" class="btn btn-ghost btn-sm">Keluar</a>
+      <% } else { %>
+        <a href="/login" class="btn btn-primary btn-sm">Masuk</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+<script src="/js/main.js" defer></script>

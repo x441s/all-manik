@@ -1,0 +1,78 @@
+<%- include('../partials/head', { pageTitle }) %>
+<%- include('../partials/dash-open') %>
+
+<div class="dash-head">
+  <div>
+    <h1>Tugas</h1>
+    <p class="muted">Berikan tugas &amp; PR, dan pantau tenggatnya.</p>
+  </div>
+</div>
+
+<%- include('../partials/flash') %>
+
+<details class="card form-card">
+  <summary class="form-card-title">＋ Tambah Tugas Baru</summary>
+  <form method="POST" action="/guru/tugas" class="form form-grid">
+    <label class="field">
+      <span>Kelas</span>
+      <select name="kelas_id" required>
+        <% kelas.forEach((k) => { %><option value="<%= k.id %>"><%= k.nama %></option><% }) %>
+      </select>
+    </label>
+    <label class="field">
+      <span>Mata Pelajaran</span>
+      <input type="text" name="mapel" placeholder="mis. Matematika" required>
+    </label>
+    <label class="field field-wide">
+      <span>Judul Tugas</span>
+      <input type="text" name="judul" placeholder="mis. Latihan Soal Pecahan" required>
+    </label>
+    <label class="field field-wide">
+      <span>Deskripsi</span>
+      <textarea name="deskripsi" rows="3" placeholder="Penjelasan tugas..."></textarea>
+    </label>
+    <label class="field">
+      <span>Tenggat (opsional)</span>
+      <input type="date" name="tenggat">
+    </label>
+    <div class="field form-actions">
+      <button type="submit" class="btn btn-primary">Simpan Tugas</button>
+    </div>
+  </form>
+</details>
+
+<section class="card">
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>Judul</th><th>Mapel</th><th>Kelas</th><th>Tenggat</th><th class="ta-right">Aksi</th></tr>
+      </thead>
+      <tbody>
+        <% if (tugas.length) { %>
+          <% tugas.forEach((t) => { %>
+            <tr>
+              <td><strong><%= t.judul %></strong><% if (t.deskripsi) { %><div class="muted small"><%= t.deskripsi %></div><% } %></td>
+              <td><%= t.mapel %></td>
+              <td><%= t.kelas %></td>
+              <td>
+                <% if (t.tenggat) { %>
+                  <span class="badge <%= t.tenggat < now.toISOString().slice(0,10) ? 'badge-danger' : 'badge-warn' %>"><%= t.tenggat %></span>
+                <% } else { %><span class="muted">–</span><% } %>
+              </td>
+              <td class="ta-right">
+                <form method="POST" action="/guru/tugas/<%= t.id %>/delete" class="inline" onsubmit="return confirm('Hapus tugas ini?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="5" class="muted ta-center">Belum ada tugas. Tambahkan melalui form di atas.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<%- include('../partials/dash-close') %>
+<%- include('../partials/end') %>

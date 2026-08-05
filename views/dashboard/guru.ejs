@@ -1,0 +1,93 @@
+<%- include('../partials/head', { pageTitle }) %>
+<%- include('../partials/dash-open') %>
+
+<div class="dash-head">
+  <div>
+    <h1>Dashboard Guru</h1>
+    <p class="muted">Selamat datang, <%= currentUser.name %> 👋</p>
+  </div>
+  <div class="dash-head-actions">
+    <a href="/guru/tugas" class="btn btn-primary btn-sm">+ Buat Tugas</a>
+    <a href="/guru/materi" class="btn btn-ghost btn-sm">+ Tambah Materi</a>
+  </div>
+</div>
+
+<%- include('../partials/flash') %>
+
+<div class="grid stat-grid">
+  <div class="card stat-card">
+    <span class="stat-ico">🗓</span>
+    <div><strong><%= jadwalCount %></strong><span>Jadwal Mengajar</span></div>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-ico">📚</span>
+    <div><strong><%= materiCount %></strong><span>Materi</span></div>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-ico">📝</span>
+    <div><strong><%= tugasCount %></strong><span>Tugas</span></div>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-ico">👧</span>
+    <div><strong><%= siswaCount %></strong><span>Siswa Terdaftar</span></div>
+  </div>
+</div>
+
+<div class="dash-cols">
+  <section class="card">
+    <div class="card-head">
+      <h2>🗓 Jadwal Hari Ini</h2>
+      <a href="/guru/jadwal" class="link">Kelola →</a>
+    </div>
+    <% if (jadwalHariIni.length) { %>
+      <ul class="list">
+        <% jadwalHariIni.forEach((j) => { %>
+          <li>
+            <strong><%= j.jam_mulai %>–<%= j.jam_selesai %></strong>
+            <span><%= j.mapel %> · <%= j.kelas %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="muted">Tidak ada jadwal hari ini. Santai saja. 😌</p>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>📚 Materi Terbaru</h2>
+      <a href="/guru/materi" class="link">Kelola →</a>
+    </div>
+    <% if (materiTerbaru.length) { %>
+      <ul class="list">
+        <% materiTerbaru.forEach((m) => { %>
+          <li><strong><%= m.judul %></strong><span><%= m.mapel %> · <%= m.kelas %></span></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="muted">Belum ada materi.</p>
+    <% } %>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>📝 Tugas Terbaru</h2>
+      <a href="/guru/tugas" class="link">Kelola →</a>
+    </div>
+    <% if (tugasTerbaru.length) { %>
+      <ul class="list">
+        <% tugasTerbaru.forEach((t) => { %>
+          <li>
+            <strong><%= t.judul %></strong>
+            <span><%= t.mapel %> · <%= t.kelas %> <% if (t.tenggat) { %>· tenggat <%= t.tenggat %><% } %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="muted">Belum ada tugas.</p>
+    <% } %>
+  </section>
+</div>
+
+<%- include('../partials/dash-close') %>
+<%- include('../partials/end') %>

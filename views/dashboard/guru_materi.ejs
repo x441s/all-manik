@@ -1,0 +1,74 @@
+<%- include('../partials/head', { pageTitle }) %>
+<%- include('../partials/dash-open') %>
+
+<div class="dash-head">
+  <div>
+    <h1>Materi Pembelajaran</h1>
+    <p class="muted">Bagikan materi ke siswa Anda.</p>
+  </div>
+</div>
+
+<%- include('../partials/flash') %>
+
+<details class="card form-card">
+  <summary class="form-card-title">＋ Tambah Materi Baru</summary>
+  <form method="POST" action="/guru/materi" class="form form-grid">
+    <label class="field">
+      <span>Kelas</span>
+      <select name="kelas_id" required>
+        <% kelas.forEach((k) => { %><option value="<%= k.id %>"><%= k.nama %></option><% }) %>
+      </select>
+    </label>
+    <label class="field">
+      <span>Mata Pelajaran</span>
+      <input type="text" name="mapel" placeholder="mis. IPA" required>
+    </label>
+    <label class="field field-wide">
+      <span>Judul Materi</span>
+      <input type="text" name="judul" placeholder="mis. Sistem Tata Surya" required>
+    </label>
+    <label class="field field-wide">
+      <span>Ringkasan / Isi</span>
+      <textarea name="isi" rows="3" placeholder="Ringkasan singkat materi..."></textarea>
+    </label>
+    <label class="field field-wide">
+      <span>Link Lampiran (opsional)</span>
+      <input type="url" name="file_url" placeholder="https://...">
+    </label>
+    <div class="field field-wide form-actions">
+      <button type="submit" class="btn btn-primary">Simpan Materi</button>
+    </div>
+  </form>
+</details>
+
+<section class="card">
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>Judul</th><th>Mapel</th><th>Kelas</th><th>Tanggal</th><th class="ta-right">Aksi</th></tr>
+      </thead>
+      <tbody>
+        <% if (materi.length) { %>
+          <% materi.forEach((m) => { %>
+            <tr>
+              <td><strong><%= m.judul %></strong><% if (m.file_url) { %> <a href="<%= m.file_url %>" class="link" target="_blank" rel="noopener">🔗</a><% } %></td>
+              <td><%= m.mapel %></td>
+              <td><%= m.kelas %></td>
+              <td><%= m.dibuat_pada %></td>
+              <td class="ta-right">
+                <form method="POST" action="/guru/materi/<%= m.id %>/delete" class="inline" onsubmit="return confirm('Hapus materi ini?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="5" class="muted ta-center">Belum ada materi. Tambahkan melalui form di atas.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<%- include('../partials/dash-close') %>
+<%- include('../partials/end') %>
