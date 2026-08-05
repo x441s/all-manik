@@ -10,6 +10,7 @@ const path = require('node:path');
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+const ejs = require('ejs');
 const { all, get, run, pool, isPostgres, init } = require('./db');
 
 const app = express();
@@ -34,6 +35,9 @@ const ROOT = appRoot();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(ROOT, 'views'));
+// Daftarkan engine secara eksplisit — penting saat dibundle (esbuild),
+// agar Express tidak perlu require('ejs') dinamis di runtime.
+app.engine('ejs', ejs.renderFile);
 app.use(express.static(path.join(ROOT, 'public')));
 app.use(express.urlencoded({ extended: true }));
 

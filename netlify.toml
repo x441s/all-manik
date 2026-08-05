@@ -8,8 +8,9 @@
   included_files = ["netlify/functions/_assets/**"]
 
 [functions.esbuild]
-  # ejs di-require dinamis oleh Express saat render → harus eksternal
-  external = ["pg", "pg-native", "pg-connection-string", "connect-pg-simple", "ejs"]
+  # ejs dibundle langsung oleh esbuild (server.js melakukan require('ejs')
+  # secara statis + app.engine eksplisit), jadi tidak perlu eksternal
+  external = ["pg", "pg-native", "pg-connection-string", "connect-pg-simple"]
 
 # Arahkan semua URL ke aplikasi Express
 [[redirects]]
