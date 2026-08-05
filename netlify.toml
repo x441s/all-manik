@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions.esbuild]
+  external = ["pg", "pg-native", "pg-connection-string", "connect-pg-simple"]
+
+# Arahkan semua URL ke aplikasi Express
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200

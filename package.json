@@ -1,0 +1,26 @@
+{
+  "name": "rumah-belajar-all-manik",
+  "version": "1.0.0",
+  "description": "Rumah Belajar All Manik - Platform belajar dengan dashboard admin, guru, dan orang tua",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build": "node netlify/prepare.js"
+  },
+  "keywords": [
+    "sekolah",
+    "belajar",
+    "dashboard"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^10.0.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "pg": "^8.22.0",
+    "serverless-http": "^4.0.0"
+  }
+}
